@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 public class Student {
 
-    private String firstName;
-    private String lastName;
-    private ArrayList<Subject> subjects;
+    private final String firstName;
+    private final String lastName;
+    private final ArrayList<Subject> subjects;
 
     public Student(String firstName, String lastName) {
         this.firstName = firstName;
@@ -53,7 +53,12 @@ public class Student {
      */
     public String bestSubject() {
 
-        return null;
+        if (subjects.isEmpty()) return null;
+        Subject max = new Subject("base");
+        for (Subject s : subjects) {
+            if (s.getCurrentGrade()>max.getCurrentGrade()) max = s;
+        }
+        return max.getName();
 
     }
 
@@ -63,7 +68,11 @@ public class Student {
      */
     public double averageGrade() {
 
-        return 0.0;
+        double sum = 0;
+        for (Subject s : subjects) {
+            sum+=s.getCurrentGrade();
+        }
+        return sum/subjects.size();
 
     }
 
@@ -81,7 +90,12 @@ public class Student {
      */
     public String reportCard() {
 
-        return null;
+        StringBuilder res = new StringBuilder();
+        res.append("Report card for ").append(firstName).append(" ").append(lastName).append("\n");
+        for (Subject s : subjects) {
+            res.append(s.getName()).append("\t").append(s.getCurrentGrade()).append("\n");
+        }
+        return res.substring(0,res.length()-1);
 
     }
 
